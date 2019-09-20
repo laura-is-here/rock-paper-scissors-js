@@ -8,52 +8,71 @@
     // Your JavaScript goes here!
       // Set up the computer's selection
       function computerPlay() {
-          let randomNum = Math.floor(Math.random()*3); // random number multiplied by numbers of options (3)
+           /* random number multiplied by                                                     
+           // number of options (3) */
+          let randomNum = Math.floor(Math.random()*3); 
+
           if (randomNum === 0) {
-              return "rock";
+              return 'rock';
           } else if (randomNum === 1) {
-              return "paper";
+              return 'paper';
           } else {
-              return "scissors";
+              return 'scissors';
           }
       };
+
       // Set up a round of rock paper scissors
-      function playRound(playerSelection, computerSelection) {
-          let player = playerSelection.toLowerCase(); // Convert player input to lowercase
+      function playRound(playerSelection, computerSelection) { 
+           /* Define variables to hold player &                                                        
+           // computer choices */
+          let player = playerSelection.toLowerCase(); // Convert player 
+                                                      // input to lowercase
           let computer = computerSelection;
-          switch(player) { // Use switch to define what happens depending on player input
-              case "rock": // 
-                  if (computer === "rock") { // Use if else if statements to return the results of the round
-                      return "Draw! You selected " + player + " and the computer selected " + computer;
-                  } else if (computer === "scissors") {
-                      return "You win! " + player + " breaks " + computer;
+
+          switch(player) { /* Use switch to define what 
+                           // happens depending on player input */
+              case 'rock':  
+                  /* Use if else if statements                       
+                  // to return the results of the round */
+                  if (computer === 'rock') { 
+                      return 'Draw! You selected ' + player + 
+                             ' and the computer selected ' + computer;
+                  } else if (computer === 'scissors') {
+                      return 'You win! ' + player + ' breaks ' + computer;
                   } else {
-                      return "You lose! " + computer + " covers " + player;
+                      return 'You lose! ' + computer + ' covers ' + player;
                   };
                   break;
-              case "scissors":
-                  if (computer === "rock") {
-                      return "You lose! " + computer + " breaks " + player;
-                  } else if (computer === "scissors") {
-                      return "Draw! You selected " + player + " and the computer selected " + computer;
+
+              case 'scissors':
+                  if (computer === 'rock') {
+                      return 'You lose! ' + computer + ' breaks ' + player;
+                  } else if (computer === 'scissors') {
+                      return 'Draw! You selected ' + player + 
+                             ' and the computer selected ' + computer;
                   } else {
-                      return "You win! " + player + " cuts " + computer;
+                      return 'You win! ' + player + ' cuts ' + computer;
                   };
                   break;
-              case "paper":
-                  if (computer === "rock") {
-                      return "You win! " + player + " covers " + computer;
-                  } else if (computer === "scissors") {
-                      return "You lose! " + computer + " cuts " + player;
+
+              case 'paper':
+                  if (computer === 'rock') {
+                      return 'You win! ' + player + ' covers ' + computer;
+                  } else if (computer === 'scissors') {
+                      return 'You lose! ' + computer + ' cuts ' + player;
                   } else {
-                      return "Draw! You selected " + player + " and the computer selected " + computer;
+                      return 'Draw! You selected ' + player + 
+                             ' and the computer selected ' + computer;
                   };
                   break;
+
               default:
-                  return "Not a valid response"; // case for any other responses (not valid)
+                  // case for any other responses (not valid)
+                  return 'Not a valid response'; 
                   break;
           };
       };
+
       // Set up a five round game of rock paper scissors and declare a winner
       function game() {
           let computerSelection = ''; 
@@ -62,21 +81,33 @@
           let computerScore = 0;
           let roundResult = '';
           let i = 0;
+
           // loop through five rounds
           for (i = 0; i < 5; i++) {
-              playerSelection = prompt('Type rock, paper, or scissors'); // prompt for player's choice 
+              // prompt for player's choice 
+              playerSelection = prompt('Type rock, paper, or scissors');
+
               computerSelection = computerPlay();
-              roundResult = playRound(playerSelection, computerSelection); // round result from playRound() cases
-              if (roundResult.indexOf('win') != -1) { // check for keyword "win" from playRound
+
+              // round result from playRound() cases
+              roundResult = playRound(playerSelection, computerSelection); 
+
+              // check for keyword 'win' from playRound
+              if (roundResult.indexOf('win') != -1) { 
                   ++playerScore;
-              } else if (roundResult.indexOf('lose') != -1) { // check for keyword lose
+
+              // check for keyword lose
+              } else if (roundResult.indexOf('lose') != -1) { 
                   ++computerScore;
-              } else if (roundResult.indexOf('valid') != -1) { // alert for invalid input and subtract from the loop iteration
+
+              // alert for invalid input and subtract from the loop iteration
+              } else if (roundResult.indexOf('valid') != -1) { 
                   --i;
                  alert('Invalid response, try again');
               } else { // this last else acts as the case for a draw
               }
           }
+
           if (playerScore > computerScore) { // determine a winner
               return 'You win! ' + playerScore + ' to ' + computerScore;
           } else if (playerScore < computerScore) {
@@ -84,7 +115,7 @@
           } else {
               return 'Draw! ' + playerScore + ' to ' + computerScore;
           }
-      }
+      };
       console.log(game());
   </script>
 </body>
