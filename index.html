@@ -6,8 +6,9 @@
 <body>
   <script>
     // Your JavaScript goes here!
+      // Set up the computer's selection
       function computerPlay() {
-          let randomNum = Math.floor(Math.random()*3);
+          let randomNum = Math.floor(Math.random()*3); // random number multiplied by numbers of options (3)
           if (randomNum === 0) {
               return "rock";
           } else if (randomNum === 1) {
@@ -16,12 +17,13 @@
               return "scissors";
           }
       };
+      // Set up a round of rock paper scissors
       function playRound(playerSelection, computerSelection) {
-          let player = playerSelection.toLowerCase();
-          let computer = computerSelection.toLowerCase();
-          switch(player) {
-              case "rock":
-                  if (computer === "rock") {
+          let player = playerSelection.toLowerCase(); // Convert player input to lowercase
+          let computer = computerSelection;
+          switch(player) { // Use switch to define what happens depending on player input
+              case "rock": // 
+                  if (computer === "rock") { // Use if else if statements to return the results of the round
                       return "Draw! You selected " + player + " and the computer selected " + computer;
                   } else if (computer === "scissors") {
                       return "You win! " + player + " breaks " + computer;
@@ -48,10 +50,11 @@
                   };
                   break;
               default:
-                  return "Not a valid response";
+                  return "Not a valid response"; // case for any other responses (not valid)
                   break;
           };
       };
+      // Set up a five round game of rock paper scissors and declare a winner
       function game() {
           let computerSelection = ''; 
           let playerSelection = ''; 
@@ -59,21 +62,22 @@
           let computerScore = 0;
           let roundResult = '';
           let i = 0;
+          // loop through five rounds
           for (i = 0; i < 5; i++) {
-              playerSelection = prompt('Type rock, paper, or scissors'); 
+              playerSelection = prompt('Type rock, paper, or scissors'); // prompt for player's choice 
               computerSelection = computerPlay();
-              roundResult = playRound(playerSelection, computerSelection);
-              if (roundResult.indexOf('win') != -1) {
+              roundResult = playRound(playerSelection, computerSelection); // round result from playRound() cases
+              if (roundResult.indexOf('win') != -1) { // check for keyword "win" from playRound
                   ++playerScore;
-              } else if (roundResult.indexOf('lose') != -1) {
+              } else if (roundResult.indexOf('lose') != -1) { // check for keyword lose
                   ++computerScore;
-              } else if (roundResult.indexOf('valid') != -1) {
+              } else if (roundResult.indexOf('valid') != -1) { // alert for invalid input and subtract from the loop iteration
                   --i;
                  alert('Invalid response, try again');
-              } else {
+              } else { // this last else acts as the case for a draw
               }
           }
-          if (playerScore > computerScore) {
+          if (playerScore > computerScore) { // determine a winner
               return 'You win! ' + playerScore + ' to ' + computerScore;
           } else if (playerScore < computerScore) {
               return 'You lose! ' + computerScore + ' to ' + playerScore;
@@ -82,55 +86,6 @@
           }
       }
       console.log(game());
-          /*let roundOneResult = playRound(playerSelection, computerSelection);
-          playerSelection = prompt('Type rock, paper, or scissors'); 
-          let roundTwoResult = playRound(playerSelection, computerSelection);
-          playerSelection = prompt('Type rock, paper, or scissors'); 
-          let roundThreeResult = playRound(playerSelection, computerSelection);
-          playerSelection = prompt('Type rock, paper, or scissors'); 
-          let roundFourResult = playRound(playerSelection, computerSelection);
-          playerSelection = prompt('Type rock, paper, or scissors'); 
-          let roundFiveResult = playRound(playerSelection, computerSelection);
-          playerSelection = prompt('Type rock, paper, or scissors'); 
-
-          if (roundOneResult.indexOf('win') === true) {
-              ++playerScore;
-          } else if (roundOneResult.indexOf('lose') === true) {
-              ++computerScore;
-          } else {
-              return;
-          }
-          if (roundTwoResult.indexOf('win') === true) {
-              ++playerScore;
-          } else if (roundOneResult.indexOf('lose') === true) {
-              ++computerScore;
-          } else {
-              return;
-          }
-          if (roundThreeResult.indexOf('win') === true) {
-              ++playerScore;
-          } else if (roundOneResult.indexOf('lose') === true) {
-              ++computerScore;
-          } else {
-              return;
-          }
-          if (roundFourResult.indexOf('win') === true) {
-              ++playerScore;
-          } else if (roundOneResult.indexOf('lose') === true) {
-              ++computerScore;
-          } else {
-              return;
-          }
-          if (roundFiveResult.indexOf('win') === true) {
-              ++playerScore;
-          } else if (roundOneResult.indexOf('lose') === true) {
-              ++computerScore;
-          } else {
-              return;
-          }
-      };
-      game();
-      console.log(game());*/
   </script>
 </body>
 </html>
