@@ -14,20 +14,39 @@
             <h1>Play anouther round?</h1>
             <label for="choose-your-weapon">Choose your weapon:</label>
             <select name="choose-your-weapon" id="choose-your-weapon">
-                <option value="Rock">Rock</option>
-                <option value="Paper">Paper</option>
-                <option value="Scissors">Scissors</option>
+                <option value="rock">Rock</option>
+                <option value="paper">Paper</option>
+                <option value="scissors">Scissors</option>
             </select>
-            <p id="computer-choice"></p>
+            <input type="submit" value="Submit" id="submit">
+            <p id="round-result"></p>
         </div>
         <div id="scorecard">
         </div>
     </main>
 
+</body>
   <script>
     // Your JavaScript goes here!
       // Set up the computer's selection
-      function playComputer() {
+      let computerSelection = ''; 
+      let playerSelection = '';
+      let playerResult = '';
+      let computerResult = '';
+      let playerScore = 0;
+      let computerScore = 0;
+      let roundResult = '';
+
+      const inputChoice = document.querySelector('#choose-your-weapon');
+      const inputSubmit = document.querySelector('#submit');
+      const playerSelectionParagraph = document.querySelector('#player-choice');
+      const roundResultParagraph = document.querySelector('#round-result');
+
+      const playerScoreParagraph = document.createElement('p');
+      const computerScoreParagraph = document.createElement('p');
+      const scoreCard = document.querySelector('#scorecard');
+
+      function computerPlay() {
            /* random number multiplied by                                                     
            // number of options (3) */
           let randomNum = Math.floor(Math.random()*3); 
@@ -45,9 +64,8 @@
       function playRound(playerSelection, computerSelection) { 
            /* Define variables to hold player &                                                        
            // computer choices */
-          let player = playerSelection.toLowerCase(); // Convert player 
-                                                      // input to lowercase
-          let computer = computerSelection;
+          player = playerSelection.toLowerCase();
+          computer = computerSelection;
 
           switch(player) { /* Use switch to define what 
                            // happens depending on player input */
@@ -56,77 +74,120 @@
                   /* Use if else if statements                       
                   // to return the results of the round */
                   if (computer === 'rock') { 
-                      return 'Draw! You selected ' + player + 
+                      roundResultParagraph.textContent = 
+                             'Draw! You selected ' + player + 
                              ' and the computer selected ' + computer;
                   } else if (computer === 'scissors') {
-                      return 'You win! ' + player + ' breaks ' + computer;
+                      ++playerScore;
+                      updateScore();
+                      roundResultParagraph.textContent = 
+                             'You win! ' + player + ' breaks ' + computer;
                   } else {
-                      return 'You lose! ' + computer + ' covers ' + player;
+                      ++computerScore;
+                      updateScore();
+                      roundResultParagraph.textContent = 
+                             'You lose! ' + computer + ' covers ' + player;
                   };
                   break;
 
               case 'scissors':
                   if (computer === 'rock') {
-                      return 'You lose! ' + computer + ' breaks ' + player;
+                      ++computerScore;
+                      updateScore();
+                      roundResultParagraph.textContent = 
+                             'You lose! ' + computer + ' breaks ' + player;
                   } else if (computer === 'scissors') {
-                      return 'Draw! You selected ' + player + 
+                      roundResultParagraph.textContent = 
+                             'Draw! You selected ' + player + 
                              ' and the computer selected ' + computer;
                   } else {
-                      return 'You win! ' + player + ' cuts ' + computer;
+                      ++playerScore;
+                      updateScore();
+                      roundResultParagraph.textContent = 
+                             'You win! ' + player + ' cuts ' + computer;
                   };
                   break;
 
               case 'paper':
                   if (computer === 'rock') {
-                      return 'You win! ' + player + ' covers ' + computer;
+                      ++playerScore;
+                      updateScore();
+                      roundResultParagraph.textContent = 
+                             'You win! ' + player + ' covers ' + computer;
                   } else if (computer === 'scissors') {
-                      return 'You lose! ' + computer + ' cuts ' + player;
+                      ++computerScore;
+                      updateScore();
+                      roundResultParagraph.textContent = 
+                             'You lose! ' + computer + ' cuts ' + player;
                   } else {
-                      return 'Draw! You selected ' + player + 
+                      roundResultParagraph.textContent = 
+                             'Draw! You selected ' + player + 
                              ' and the computer selected ' + computer;
                   };
                   break;
 
               default:
                   // case for any other responses (not valid)
-                  return 'Not a valid response'; 
+                  roundResultParagraph.textContent = 
+                         'Not a valid response'; 
                   break;
           };
       };
 
-      // Set up a five round game of rock paper scissors and declare a winner
-      function game() {
-          let computerSelection = ''; 
-          let playerSelection = ''; 
-          let playerScore = 0;
-          let computerScore = 0;
-          let roundResult = '';
-          let i = 0;
+      function updateScore() {
+        scoreCard.appendChild(playerScoreParagraph);
+        scoreCard.appendChild(computerScoreParagraph);
+        if (playerScore < 5 && computerScore < 5) {
+            playerScoreParagraph.textContent = 'Your score: ' + playerScore;
+            computerScoreParagraph.textContent = 'Computer score: ' + computerScore;
+        } else {
+            if (computerScore = 5) {
+                computerScoreParagraph.textContent = 'Computer score: ' + computerScore + ' Computer wins!';
+            } else {
+                playerScoreParagraph.textContent = 'Player score: ' + playerScore + ' You win!';
+            }
+            playerScore = 0;
+            computerScore = 0;
+        }         
+    };
 
-          // loop through five rounds
-          for (i = 0; i < 5; i++) {
-              // prompt for player's choice 
-              playerSelection = prompt('Type rock, paper, or scissors');
+      inputSubmit.addEventListener('click', () => {
+        playerSelection = inputChoice.options[inputChoice.selectedIndex].text;
+        computerSelection = computerPlay();
+        playRound(playerSelection, computerSelection);
+      });
 
-              computerSelection = computerPlay();
+          /*function declareWinner() {
+              if (((playerResult.indexOf('rock') != -1) &&
+                 (computerResult.indexOf('paper') != -1)) || 
+                 ((playerResult.indexOf('paper') != -1) &&
+                 (computerResult.indexOf('scissors') != -1)) || 
+                 ((playerResult.indexOf('scissors') != -1) &&
+                 (computerResult.indexOf('rock') != -1))) {
+                 ++computerScore;
+                 return 'You lose! ' + computerSelection + ' beats ' + playerSelection;
+             } else if (computerSelection == playerSelection) {
+                 return 'Draw!';
+             } else {
+                 ++playerScore;
+                 return 'You win! ' + playerSelection + ' beats ' + computerSelection;
+             };
+          };*/
 
-              // round result from playRound() cases
-              roundResult = playRound(playerSelection, computerSelection); 
 
-              // check for keyword 'win' from playRound
-              if (roundResult.indexOf('win') != -1) { 
-                  ++playerScore;
 
-              // check for keyword lose
-              } else if (roundResult.indexOf('lose') != -1) { 
-                  ++computerScore;
-
-              // alert for invalid input and subtract from the loop iteration
-              } else if (roundResult.indexOf('valid') != -1) { 
-                  --i;
-                 alert('Invalid response, try again');
-              } else { // this last else acts as the case for a draw
-              }
+          /* round result from playRound() cases
+          roundResult = playRound(playerSelection, computerSelection); 
+          // check for keyword 'win' from playRound
+          if (roundResult.indexOf('win') != -1) { 
+              ++playerScore;
+          // check for keyword lose
+          } else if (roundResult.indexOf('lose') != -1) { 
+              ++computerScore;
+          // alert for invalid input 
+          } else if (roundResult.indexOf('valid') != -1) { 
+             alert('Invalid response, try again');
+          } else { // this last else acts as the case for a draw
           }
 
           if (playerScore > computerScore) { // determine a winner
@@ -135,9 +196,6 @@
               return 'You lose! ' + computerScore + ' to ' + playerScore;
           } else {
               return 'Draw! ' + playerScore + ' to ' + computerScore;
-          }
-      };
-      console.log(game());
+          };*/
   </script>
-</body>
 </html>
