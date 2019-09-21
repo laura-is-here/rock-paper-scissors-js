@@ -4,10 +4,30 @@
   <title>Page Title</title>
 </head>
 <body>
+    <header>
+        <h1>Rock, Paper, Scissors</h1>
+        <h2>A JS Game</h2>
+        <h3>by laura-is-here</h3>
+    </header>
+    <main>
+        <div>
+            <h1>Play anouther round?</h1>
+            <label for="choose-your-weapon">Choose your weapon:</label>
+            <select name="choose-your-weapon" id="choose-your-weapon">
+                <option value="Rock">Rock</option>
+                <option value="Paper">Paper</option>
+                <option value="Scissors">Scissors</option>
+            </select>
+            <p id="computer-choice"></p>
+        </div>
+        <div id="scorecard">
+        </div>
+    </main>
+
   <script>
     // Your JavaScript goes here!
       // Set up the computer's selection
-      function computerPlay() {
+      function playComputer() {
            /* random number multiplied by                                                     
            // number of options (3) */
           let randomNum = Math.floor(Math.random()*3); 
@@ -31,6 +51,7 @@
 
           switch(player) { /* Use switch to define what 
                            // happens depending on player input */
+
               case 'rock':  
                   /* Use if else if statements                       
                   // to return the results of the round */
